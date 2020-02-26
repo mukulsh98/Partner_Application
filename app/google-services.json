@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "330013046784",
+    "firebase_url": "https://prototype1-phoneotp.firebaseio.com",
+    "project_id": "prototype1-phoneotp",
+    "storage_bucket": "prototype1-phoneotp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:330013046784:android:2f5ab704a77028fa4d00e5",
+        "android_client_info": {
+          "package_name": "com.example.prototype_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "330013046784-vsjutgl5igk27d9rgq8f31456uhod6u0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.prototype_1",
+            "certificate_hash": "99771f12caac40631bf84ff13c5c4f538161b068"
+          }
+        },
+        {
+          "client_id": "330013046784-v0dr6escl58o4fn0v5p2833g56ghjlo0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjMgPDA1hl78_NuFI9yS6mp2m-aVFnz4A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "330013046784-v0dr6escl58o4fn0v5p2833g56ghjlo0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
