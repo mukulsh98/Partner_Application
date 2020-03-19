@@ -17,6 +17,7 @@ import com.google.android.material.navigation.NavigationView;
 public class HomeScreen extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener{
 
     private DrawerLayout drawer;
+    private String uname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,8 @@ public class HomeScreen extends AppCompatActivity implements  NavigationView.OnN
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        uname=getIntent().getStringExtra("uname");
+
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -43,12 +46,13 @@ public class HomeScreen extends AppCompatActivity implements  NavigationView.OnN
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new my_account_fragment()).commit();
 
             // it will show the first fragment...
-            navigationView.setCheckedItem(R.id.nav_order);
+            navigationView.setCheckedItem(R.id.nav_account);
         }
     }
     public boolean onNavigationItemSelected(@NonNull MenuItem item){
         switch (item.getItemId()){
             case R.id.nav_order: //here we can define what we want to do when that option is selected...
+
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new my_order_fragment()).commit();
                 break;

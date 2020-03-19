@@ -66,7 +66,7 @@ public class Signup extends AppCompatActivity {
 
                 // right now not validating phone number and only focusing on saving the data in the db... (as of 14/03)
 
-                adddata();
+              //  adddata();
             }
         });
 

@@ -26,6 +26,7 @@ public class Login extends AppCompatActivity {
     EditText un,pass;
         private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
+    private String myString;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +96,7 @@ public class Login extends AppCompatActivity {
     public void open2(String uname){
         // to pass the name at the home screen... left with password verification part...
         Intent i=new Intent(this,HomeScreen.class);
+        myString=uname;
         i.putExtra("name",uname);
         startActivity(i);
 
@@ -122,5 +124,9 @@ public class Login extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public String getMyData() {
+        return myString;
     }
 }

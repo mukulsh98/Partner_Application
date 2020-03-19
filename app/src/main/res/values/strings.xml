@@ -3,5 +3,31 @@
 
     <string name="navigation_drawer_open">Open Navigation drawer</string>
     <string name="navigation_drawer_close">Close Navigation drawer</string>
+    <array name="category">
+        <item>Restaurants</item>
+        <item>Grocery</item>
+        <item>Chemist</item>
+        <item>Footwears</item>
+        <item>Clothing</item>
+        <item>Eyewears</item>
+        <item>Disc/Pubs</item>
+        <item>Parking</item>
+        <item>Fueling Station</item>
+        <item>Hospitals</item>
+        <item>Saloons</item>
+        <item>Dairy</item>
+        <item>Toys</item>
+        <item>Mobile Accessories</item>
+        <item>Electronics</item>
+    </array>
+    <string name="title_activity_map">MapActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
 </resources>
