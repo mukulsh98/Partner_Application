@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.hardware.camera" />
     <uses-permission android:name="android.hardware.camera.autofocus" />
@@ -22,9 +24,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AlzaSyC0mXuSdGjxPEIO4g0bWKdAztcsxtnlzgs"/>
         <activity
             android:name=".MapActivity"
             android:label="@string/title_activity_map"
+
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".Location_permission" />
         <activity android:name=".Signup" />

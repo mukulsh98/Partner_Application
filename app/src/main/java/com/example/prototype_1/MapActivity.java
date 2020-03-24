@@ -40,6 +40,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -170,6 +171,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                 };
                                 mFusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null);
                             }
+                        }
+                        else{
+                            Toast.makeText(getApplicationContext(),"unable to get last location",Toast.LENGTH_LONG).show();
                         }
                     }
                 });
