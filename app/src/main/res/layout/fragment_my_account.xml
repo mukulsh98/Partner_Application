@@ -50,6 +50,7 @@
                              android:padding="16dp"
                              android:orientation="vertical">
                               <ImageView
+                                  android:id="@+id/payment"
                                   android:src="@drawable/pay"
                                   android:layout_width="60dp"
                                   android:layout_height="60dp" />
@@ -201,6 +202,7 @@
                              android:padding="16dp"
                              android:orientation="vertical">
                               <ImageView
+                                  android:id="@+id/discout"
                                   android:src="@drawable/coupon"
                                   android:layout_width="60dp"
                                   android:layout_height="60dp" />

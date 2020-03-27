@@ -66,7 +66,7 @@ public class Signup extends AppCompatActivity {
 
                 // right now not validating phone number and only focusing on saving the data in the db... (as of 14/03)
 
-              //  adddata();
+               addata();
             }
         });
 
@@ -79,7 +79,7 @@ public class Signup extends AppCompatActivity {
         });
     }
 
-    public void adddata(){
+    public void addata(){
         String uname=name.getText().toString();
         String em= id.getText().toString();
         String pno=number.getText().toString();
@@ -94,6 +94,7 @@ public class Signup extends AppCompatActivity {
        databasepartner.child(id).setValue(p);
 
         Toast.makeText(getApplicationContext(), "User Created!", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(Signup.this,Login.class));
     }
     private boolean validate(){
 
