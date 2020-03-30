@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -41,8 +43,10 @@ public class discount extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discount);
 
-        storageReference = FirebaseStorage.getInstance().getReference("Discount");  //
-        databaseReference = FirebaseDatabase.getInstance().getReference("Discount");  //
+        storageReference = FirebaseStorage.getInstance().getReference("Partner Offers");  //
+        databaseReference = FirebaseDatabase.getInstance("https://customerprototype-29375-fbcfa.firebaseio.com/")
+                .getReference();
+        //
         btnbrowse = (Button)findViewById(R.id.btnbrowse);
         btnupload= (Button)findViewById(R.id.btnupload);
         txtdata = (EditText)findViewById(R.id.txtdata);
@@ -87,6 +91,7 @@ public class discount extends AppCompatActivity {
                             @SuppressWarnings("VisibleForTests")
                             uploadinfo imageUploadInfo = new uploadinfo(TempImageName, taskSnapshot.getUploadSessionUri().toString());
                             String ImageUploadId = databaseReference.push().getKey();
+
                             databaseReference.child(ImageUploadId).setValue(imageUploadInfo);
                         }
                     });

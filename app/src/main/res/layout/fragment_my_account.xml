@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
+
           <LinearLayout
               android:orientation="vertical"
               android:layout_width="match_parent"
@@ -24,6 +25,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#FFFFFF"/>
+                    <Switch
+                        android:id="@+id/profile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top"
+                        android:text="Profile"
+                        android:layout_alignParentRight="true"
+                        android:checked="true"
+                        />
                </RelativeLayout>
                <GridLayout
                    android:layout_width="match_parent"
@@ -81,7 +91,8 @@
                              android:padding="16dp"
                              android:orientation="vertical">
                               <ImageView
-                                  android:src="@drawable/museum"
+                                  android:id="@+id/qrcode"
+                                  android:src="@drawable/qr_code"
                                   android:layout_width="60dp"
                                   android:layout_height="60dp" />
                               <TextView
@@ -89,7 +100,7 @@
 
                                   android:textColor="#6f6f6f"
                                   android:textSize="18sp"
-                                  android:text="Bank"
+                                  android:text="QR Code"
                                   android:layout_width="wrap_content"
                                   android:layout_height="wrap_content"/>
                          </LinearLayout>

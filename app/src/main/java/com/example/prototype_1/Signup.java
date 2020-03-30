@@ -1,5 +1,6 @@
 package com.example.prototype_1;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,36 +12,45 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Signup extends AppCompatActivity {
 
-    EditText name,id,number,password,password2;
+    EditText name,id,password,password2;
+    String newVersion;
+    String mobile;
     Spinner s1;
     Button b1;
     TextView userLogin;
-    DatabaseReference databasepartner;
+    DatabaseReference databasepartner,databaseReference;
+    FirebaseAuth mFirebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        databasepartner= FirebaseDatabase.getInstance().getReference("Partner");
-        FirebaseOptions options = new FirebaseOptions.Builder()
-                .setApplicationId("1:1058913539887:android:eeb8e831e7595d47de33da") // Required for Analytics.
-                .setApiKey("AIzaSyAkh0JWnGYUhhAGZVDraBW2BbBMsNoMpKQ") // Required for Auth.
-                .setDatabaseUrl("https://customerprototype-29375-fbcfa.firebaseio.com/") // Required for RTDB.
-                .build();
+        databasepartner = FirebaseDatabase.getInstance("https://customerprototype-29375-fbcfa.firebaseio.com/")
+                .getReference();
 
+        mFirebaseAuth=FirebaseAuth.getInstance();
         // as now we have access to both the db we can look at the customer profile as well...
 
 
         //
+
         name=(EditText)findViewById(R.id.nam);
         id=(EditText)findViewById(R.id.email);
-        number=(EditText)findViewById(R.id.editText);
+        Intent intent = getIntent();
+         mobile = intent.getStringExtra("mobile");
         password=(EditText)findViewById(R.id.editText2);
         password2=(EditText)findViewById(R.id.editText3);
         userLogin=(TextView)findViewById(R.id.tvUserLogin);
@@ -82,31 +92,43 @@ public class Signup extends AppCompatActivity {
     public void addata(){
         String uname=name.getText().toString();
         String em= id.getText().toString();
-        String pno=number.getText().toString();
+
         String p1=(String)password.getText().toString();
         String genre=s1.getSelectedItem().toString();
 
+        String temp_id="usr";
 
        String id= databasepartner.push().getKey();
 
-       profile p= new profile(uname,em,pno,p1,genre);
+       profile p= new profile(uname,em,mobile,p1,genre,temp_id);
 
        databasepartner.child(id).setValue(p);
+        createLogin(em,p1);
 
         Toast.makeText(getApplicationContext(), "User Created!", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(Signup.this,Login.class));
     }
+
+    private void createLogin(String em, String p1) {
+
+        mFirebaseAuth.createUserWithEmailAndPassword(em,p1).addOnCompleteListener(Signup.this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+
+            }
+        });
+    }
+
     private boolean validate(){
 
         boolean result=false;
 
         String uname=name.getText().toString();
         String em= id.getText().toString();
-        String pno=number.getText().toString();
         String p1=(String)password.getText().toString();
         String p2=(String)password2.getText().toString();
 
-        if(uname.isEmpty() && em.isEmpty() && pno.isEmpty() &&p1.isEmpty() && p2.isEmpty()){
+        if(uname.isEmpty() && em.isEmpty() && mobile.isEmpty() &&p1.isEmpty() && p2.isEmpty()){
             Toast.makeText(getApplicationContext(),"Please enter all the details",Toast.LENGTH_LONG).show();
         }
 
@@ -128,25 +150,29 @@ public class Signup extends AppCompatActivity {
 
         return  ans;
     }
-    public void verifynumber(){
+    public void getid(){
+        databaseReference = FirebaseDatabase.getInstance("https://customerprototype-29375-fbcfa.firebaseio.com/")
+                .getReference().child("Id");
 
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String id=dataSnapshot.child("id").getValue().toString();
+                newVersion = "usr" + (Integer.parseInt(id.substring(3,id.length()))+1);
+                commit(newVersion);
 
-        number =  findViewById(R.id.editText);
-        String num = number.getText().toString().trim();
+            }
 
-        if (num.isEmpty() || num.length()<10) {
-            Toast.makeText(getApplicationContext(), "Enter Valid Phone Number", Toast.LENGTH_LONG).show();
-        }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-        else {
-            num="+91"+num;
-            Intent i = new Intent(Signup.this, verifyphone.class);
-            i.putExtra("p1", num);
-          //  i.putExtra("username",name.getText().toString().trim());
-           // i.putExtra("email",id.getText().toString().trim());
-           // i.putExtra("password",password2.getText().toString().trim());
-            // do it for category as well...
-            startActivity(i);
-        }
+            }
+        });
+
     }
+
+    public void commit(String newVersion){
+
+    }
+
 }

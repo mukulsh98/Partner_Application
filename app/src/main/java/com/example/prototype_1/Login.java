@@ -83,10 +83,9 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                // testing...
-                Intent intent=new Intent(Login.this, Signup.class);
-                Toast.makeText(getApplicationContext(),"Now switching ",Toast.LENGTH_LONG).show();
-                startActivity(intent);
+
+
+                startActivity(new Intent(Login.this, Signup.class));
 
 
 

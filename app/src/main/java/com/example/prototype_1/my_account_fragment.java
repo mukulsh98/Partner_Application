@@ -10,7 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,7 +27,8 @@ import java.util.ArrayList;
 
 public class my_account_fragment extends Fragment {
 
-    private ImageView location,payment,discount;
+    private ImageView location,payment,discount,qrcode;
+    private Switch profile_status;
     final int UPI_PAYMENT = 0;
     private PaymentsClient paymentsClient;
     @Nullable
@@ -55,6 +58,28 @@ public class my_account_fragment extends Fragment {
             public void onClick(View v) {
 
                 startActivity(new Intent(getActivity(),discount.class));
+            }
+        });
+
+        qrcode=(ImageView)v.findViewById(R.id.qrcode);
+        qrcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        profile_status=(Switch)v.findViewById(R.id.profile);
+        profile_status.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked==true){
+
+                }
+                else{
+                    // Change the status of partner to off...
+
+                    Toast.makeText(getActivity(),"Status Unactive",Toast.LENGTH_LONG).show();
+                }
             }
         });
 

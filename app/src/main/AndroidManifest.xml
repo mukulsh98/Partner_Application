@@ -24,7 +24,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".discount"></activity>
+        <activity android:name=".Verify1"></activity>
+        <activity android:name=".showQRcode" />
+        <activity android:name=".verification_code" />
+        <activity android:name=".discount" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -39,7 +42,10 @@
         <activity
             android:name=".HomeScreen"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".verifyphone" />
+        <activity
+            android:name=".verifyphone"
+            android:label="verifyphone"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Login" />
         <activity android:name=".MainActivity">
             <intent-filter>
