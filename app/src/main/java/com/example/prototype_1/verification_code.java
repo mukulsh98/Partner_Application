@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,9 +26,12 @@ import java.util.concurrent.TimeUnit;
 
 public class verification_code extends AppCompatActivity {
 
+    private Button verify_btn;
     private String mVerificationId;
     private EditText editTextCode;
     private FirebaseAuth mAuth;
+    private ProgressBar p1;
+
 
 
     String mobile;
@@ -37,6 +42,8 @@ public class verification_code extends AppCompatActivity {
 
         Intent intent = getIntent();
         mobile= intent.getStringExtra("mobile");
+
+        p1=(ProgressBar)findViewById(R.id.progressbar);
         mAuth = FirebaseAuth.getInstance();
         editTextCode = findViewById(R.id.editTextCode);
 
@@ -49,7 +56,8 @@ public class verification_code extends AppCompatActivity {
 
         //if the automatic sms detection did not work, user can also enter the code manually
         //so adding a click listener to the button
-        findViewById(R.id.buttonSignIn).setOnClickListener(new View.OnClickListener() {
+        verify_btn=(Button) findViewById(R.id.buttonSignIn);
+        verify_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String code = editTextCode.getText().toString().trim();
@@ -70,16 +78,17 @@ public class verification_code extends AppCompatActivity {
     //you can take the country id as user input as well
     private void sendVerificationCode(String mobile) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                "+91" + mobile,
-                60,
-                TimeUnit.SECONDS,
-                TaskExecutors.MAIN_THREAD,
-                mCallbacks);
+               "+91" + mobile,        // Phone number to verify
+                60,                 // Timeout duration
+                TimeUnit.SECONDS,   // Unit of timeout
+                TaskExecutors.MAIN_THREAD,               // Activity (for callback binding)
+                mCallbacks);        // OnVerificationStateChangedCallbacks
     }
 
 
     //the callback to detect the verification status
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+
         @Override
         public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
 
@@ -90,6 +99,7 @@ public class verification_code extends AppCompatActivity {
             //in this case the code will be null
             //so user has to manually enter the code
             if (code != null) {
+                p1.setVisibility(View.VISIBLE);
                 editTextCode.setText(code);
                 //verifying the code
                 verifyVerificationCode(code);
@@ -117,6 +127,7 @@ public class verification_code extends AppCompatActivity {
 
         //signing the user
         signInWithPhoneAuthCredential(credential);
+
     }
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
@@ -141,6 +152,7 @@ public class verification_code extends AppCompatActivity {
                                 message = "Invalid code entered...";
                             }
 
+                            /*
                             Snackbar snackbar = Snackbar.make(findViewById(R.id.parent), message, Snackbar.LENGTH_LONG);
                             snackbar.setAction("Dismiss", new View.OnClickListener() {
                                 @Override
@@ -149,6 +161,9 @@ public class verification_code extends AppCompatActivity {
                                 }
                             });
                             snackbar.show();
+
+                             */
+                            Toast.makeText(verification_code.this,message,Toast.LENGTH_LONG).show();
                         }
                     }
                 });

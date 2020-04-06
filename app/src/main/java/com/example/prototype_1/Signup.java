@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,10 +24,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Random;
+
 public class Signup extends AppCompatActivity {
 
     EditText name,id,password,password2;
-    String newVersion;
     String mobile;
     Spinner s1;
     Button b1;
@@ -61,22 +63,8 @@ public class Signup extends AppCompatActivity {
             @Override
             // Upon hitting the button it must verify the email address and then redirect to login page...
             public void onClick(View v) {
-               /*
 
-
-                */
-
-               /*
-               if (validate()){
-                   verifynumber();
-               }
-
-                */
-              // verifynumber();
-
-                // right now not validating phone number and only focusing on saving the data in the db... (as of 14/03)
-
-               addata();
+                    addata();
             }
         });
 
@@ -95,18 +83,15 @@ public class Signup extends AppCompatActivity {
 
         String p1=(String)password.getText().toString();
         String genre=s1.getSelectedItem().toString();
+        String user_name=getid();
+        validate();
+        String id= databasepartner.push().getKey();
+        profile p= new profile(uname,em,mobile,p1,genre,user_name);
 
-        String temp_id="usr";
-
-       String id= databasepartner.push().getKey();
-
-       profile p= new profile(uname,em,mobile,p1,genre,temp_id);
-
-       databasepartner.child(id).setValue(p);
         createLogin(em,p1);
+        databasepartner.child(id).setValue(p);
 
-        Toast.makeText(getApplicationContext(), "User Created!", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(Signup.this,Login.class));
+
     }
 
     private void createLogin(String em, String p1) {
@@ -115,6 +100,14 @@ public class Signup extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
+                if (task.isSuccessful()) {
+
+                    Toast.makeText(getApplicationContext(), "User Created!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(Signup.this, Login.class));
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"Try again after sometime",Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -130,6 +123,7 @@ public class Signup extends AppCompatActivity {
 
         if(uname.isEmpty() && em.isEmpty() && mobile.isEmpty() &&p1.isEmpty() && p2.isEmpty()){
             Toast.makeText(getApplicationContext(),"Please enter all the details",Toast.LENGTH_LONG).show();
+
         }
 
         else{
@@ -146,13 +140,16 @@ public class Signup extends AppCompatActivity {
 
     }
     public boolean checkpass(String p1,String p2){
-        boolean ans= p1.matches(p2);
+        boolean ans= (p1.matches(p2));
 
         return  ans;
     }
-    public void getid(){
+    public static String getid(){
+
+       /*
         databaseReference = FirebaseDatabase.getInstance("https://customerprototype-29375-fbcfa.firebaseio.com/")
-                .getReference().child("Id");
+
+                .getReference("Id");
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -169,10 +166,22 @@ public class Signup extends AppCompatActivity {
             }
         });
 
+
+
+        */
+
+       int length_of_id=6;
+       final String characters="abcdefijklmnopqrstuvwxyz0123456789";
+       StringBuilder result= new StringBuilder();
+       while(length_of_id > 0){
+           Random rand= new Random();
+           result.append(characters.charAt(rand.nextInt(characters.length())));
+           length_of_id--;
+       }
+       return result.toString();
+
     }
 
-    public void commit(String newVersion){
-
-    }
+   // one case with when the random id generated is already assigned to another user in the database...
 
 }

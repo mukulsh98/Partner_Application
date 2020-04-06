@@ -1,8 +1,11 @@
 package com.example.prototype_1;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.gms.common.api.ResolvableApiException;
@@ -35,6 +38,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -53,6 +57,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private Location mLastKnownLocation; // Location of the client...
     private LocationCallback locationCallback;
 
+    private static final int REQUEST_LOCATION_CODE=99;
     private MaterialSearchBar materialSearchBar;
     private  View mapView;
     private Button btn_loc;
@@ -62,6 +67,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+
 
         materialSearchBar=findViewById(R.id.searchBar);
         btn_loc=(Button)findViewById(R.id.done);
@@ -76,6 +82,24 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mapView= mapFragment.getView();
 
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch(requestCode){
+            case REQUEST_LOCATION_CODE:
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+
+                    if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                            mMap.setMyLocationEnabled(true);
+                    }
+
+                }
+                else {
+                    // permission denied
+                }
+                return;
+        }
     }
 
 
@@ -101,6 +125,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         locationRequest.setInterval(10000);
         locationRequest.setFastestInterval(5000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
 
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
 

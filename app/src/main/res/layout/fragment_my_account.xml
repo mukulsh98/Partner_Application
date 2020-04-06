@@ -252,7 +252,7 @@
 
                                   android:textColor="#6f6f6f"
                                   android:textSize="18sp"
-                                  android:text="Messages"
+                                  android:text="Reports"
                                   android:layout_width="wrap_content"
                                   android:layout_height="wrap_content"/>
                          </LinearLayout>
@@ -274,7 +274,7 @@
                              android:padding="16dp"
                              android:orientation="vertical">
                               <ImageView
-                                  android:src="@drawable/more"
+                                  android:src="@drawable/supplier"
                                   android:layout_width="60dp"
                                   android:layout_height="60dp" />
                               <TextView
@@ -282,7 +282,7 @@
 
                                   android:textColor="#6f6f6f"
                                   android:textSize="18sp"
-                                  android:text="More"
+                                  android:text="Inventory"
                                   android:layout_width="wrap_content"
                                   android:layout_height="wrap_content"/>
                          </LinearLayout>

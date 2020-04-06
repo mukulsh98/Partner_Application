@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Signup">
 
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="222dp"
@@ -134,7 +135,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:srcCompat="@drawable/p" />
+        app:srcCompat="@drawable/logo5" />
 
     <TextView
         android:id="@+id/tvUserLogin"

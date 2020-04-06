@@ -11,11 +11,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class HomeScreen extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener{
 
+    private FirebaseAuth mAuth;
+    private FirebaseUser mCurrentUser;
     private DrawerLayout drawer;
     private String uname;
 
@@ -28,7 +33,12 @@ public class HomeScreen extends AppCompatActivity implements  NavigationView.OnN
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        uname=getIntent().getStringExtra("uname");
+        mAuth= FirebaseAuth.getInstance();
+        mCurrentUser= mAuth.getCurrentUser();
+
+        uname=mCurrentUser.getDisplayName();
+        Toast.makeText(HomeScreen.this, uname,Toast.LENGTH_LONG).show();
+
 
 
         drawer = findViewById(R.id.drawer_layout);

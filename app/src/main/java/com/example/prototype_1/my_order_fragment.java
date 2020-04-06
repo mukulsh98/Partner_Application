@@ -23,6 +23,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.wallet.PaymentsClient;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -43,6 +45,8 @@ public class my_order_fragment extends Fragment {
     private ImageView qrcode;
     // QR code will be generated for the specific email address or we can do it for phone number as well as each user will have its unique phone number...
     private String email;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mCurrentUser;
 
 
 
@@ -66,6 +70,12 @@ public class my_order_fragment extends Fragment {
         scan = (Button) v.findViewById(R.id.scan);
         qrcode=(ImageView)v.findViewById(R.id.qrcode);
 
+
+        mAuth= FirebaseAuth.getInstance();
+        mCurrentUser= mAuth.getCurrentUser();
+
+        String uname=mCurrentUser.getDisplayName();
+        Toast.makeText(getActivity(), uname,Toast.LENGTH_LONG).show();
 
 
         email="sharma.mukul938@gmail.com";
