@@ -75,6 +75,9 @@ public class HomeScreen extends AppCompatActivity implements  NavigationView.OnN
             case R.id.nav_signout:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new signout_fragment()).commit();
                 break;
+            case R.id.nav_faq:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new faq_fragment()).commit();
+                break;
 
         }
         drawer.closeDrawer(GravityCompat.START);
