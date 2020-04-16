@@ -46,6 +46,7 @@
         <activity
             android:name=".Location_finder"
             android:label="@string/title_activity_location_finder"></activity>
+        <activity android:name=".Wallet"/>
         <activity android:name=".Verify1" />
         <activity android:name=".showQRcode" />
         <activity android:name=".verification_code" />

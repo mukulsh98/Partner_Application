@@ -152,6 +152,7 @@
                              android:padding="16dp"
                              android:orientation="vertical">
                               <ImageView
+                                  android:id="@+id/walletBtn"
                                   android:src="@drawable/wallet"
                                   android:layout_width="60dp"
                                   android:layout_height="60dp" />
