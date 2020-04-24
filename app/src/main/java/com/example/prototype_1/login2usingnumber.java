@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -37,14 +38,23 @@ public class login2usingnumber extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private ProgressBar p1;
     private String mobile;
+    SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verification_code);
 
-        // fetch mobile from records...
+        // Do To:
+        // 1.fetch mobile from records...
+
         mobile="9999809305";
 
+
+        // stored phone number in shared preference...
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putString("partnerId",mobile);
+        editor.commit();
         // verification
         p1=(ProgressBar)findViewById(R.id.progressbar);
         mAuth = FirebaseAuth.getInstance();
