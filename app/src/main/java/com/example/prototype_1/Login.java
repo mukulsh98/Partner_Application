@@ -5,28 +5,37 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.icu.text.IDNA;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Login extends AppCompatActivity {
 
     Button log,signin;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     EditText un,pass;
+    SharedPreferences sharedPreferences;
         private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
     private String myString;
+    private static final String TAG = "Login";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,7 +121,23 @@ public class Login extends AppCompatActivity {
                     progressDialog.dismiss();
                     Toast.makeText(Login.this,"Login Successful",Toast.LENGTH_SHORT).show();
 
+                    // store phone number in shared preference...
+                    //1. get data from firebase or from phone verification...
+
+
+                    String no ="";
+                    //2. Store that phone number in shared preference
+
+                    SharedPreferences.Editor editor= sharedPreferences.edit();
+                    editor.putString("partnerId",no);
+                    editor.commit();
+
+                    // Storing phone number in the firestore already in signup as the user is successfully registered its id is created in the firestore with initial balance...
+
+
+
                     startActivity(new Intent(Login.this,HomeScreen.class));
+
                 }
                 else{
                     Toast.makeText(Login.this,"Login Failed",Toast.LENGTH_SHORT).show();
@@ -127,5 +152,10 @@ public class Login extends AppCompatActivity {
 
     public String getMyData() {
         return myString;
+    }
+
+
+    class insert{
+        Number numbe;
     }
 }

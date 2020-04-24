@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.AuthResult;
@@ -23,7 +25,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class Signup extends AppCompatActivity {
@@ -35,6 +41,7 @@ public class Signup extends AppCompatActivity {
     TextView userLogin;
     DatabaseReference databasepartner,databaseReference;
     FirebaseAuth mFirebaseAuth;
+    private static final String TAG = "Signup";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +51,11 @@ public class Signup extends AppCompatActivity {
                 .getReference();
 
         mFirebaseAuth=FirebaseAuth.getInstance();
-        // as now we have access to both the db we can look at the customer profile as well...
 
-
-        //
+        if(mFirebaseAuth.getCurrentUser() != null){
+            startActivity(new Intent(getApplicationContext(),HomeScreen.class));
+            finish();
+        }
 
         name=(EditText)findViewById(R.id.nam);
         id=(EditText)findViewById(R.id.email);
@@ -84,29 +92,58 @@ public class Signup extends AppCompatActivity {
         String p1=(String)password.getText().toString();
         String genre=s1.getSelectedItem().toString();
         String user_name=getid();
+        String status= "on";
         validate();
         String id= databasepartner.push().getKey();
-        profile p= new profile(uname,em,mobile,p1,genre,user_name);
+        profile p= new profile(uname,em,mobile,genre,user_name, status);
 
+        // create user in firestore...
+        firestore(mobile);
         createLogin(em,p1);
         databasepartner.child(id).setValue(p);
 
 
     }
 
+    private void firestore(String mobile){
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+        DocumentReference doc = firebaseFirestore.collection("partner_balance").document(mobile);
+        Map<String, Object> map= new HashMap<>();
+        map.put("partnerBalance",0);
+        doc.set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+
+                Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_LONG).show();
+                return;
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(),"Error!!!",Toast.LENGTH_LONG).show();
+
+                Log.d(TAG,e.toString());
+            }
+        });
+    }
     private void createLogin(String em, String p1) {
 
-        mFirebaseAuth.createUserWithEmailAndPassword(em,p1).addOnCompleteListener (Signup.this, new OnCompleteListener<AuthResult>() {
+
+
+        mFirebaseAuth.createUserWithEmailAndPassword(em,p1).addOnCompleteListener ( new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if (task.isSuccessful()) {
 
+                    mFirebaseAuth.signOut();
                     Toast.makeText(getApplicationContext(), "User Created!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(Signup.this, Login.class));
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), Login.class));
                 }
                 else{
-                    Toast.makeText(getApplicationContext(),"Try again after sometime",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Error+:"+task.getException().getMessage()+".Try again after sometime.",Toast.LENGTH_LONG).show();
                 }
             }
         });
