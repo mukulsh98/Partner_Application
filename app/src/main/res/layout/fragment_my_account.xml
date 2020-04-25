@@ -275,6 +275,7 @@
                              android:padding="16dp"
                              android:orientation="vertical">
                               <ImageView
+                                  android:id="@+id/inven"
                                   android:src="@drawable/supplier"
                                   android:layout_width="60dp"
                                   android:layout_height="60dp" />

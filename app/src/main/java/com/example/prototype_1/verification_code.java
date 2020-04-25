@@ -140,6 +140,7 @@ public class verification_code extends AppCompatActivity {
                             Intent intent = new Intent(verification_code.this, Signup.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             intent.putExtra("mobile", mobile);
+                            mAuth.signOut();
                             startActivity(intent);
 
                         } else {

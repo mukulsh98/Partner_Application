@@ -34,7 +34,7 @@ import java.util.Random;
 
 public class Signup extends AppCompatActivity {
 
-    EditText name,id,password,password2;
+    EditText name,id,password,password2, shopname, add;
     String mobile;
     Spinner s1;
     Button b1;
@@ -59,6 +59,8 @@ public class Signup extends AppCompatActivity {
 
         name=(EditText)findViewById(R.id.nam);
         id=(EditText)findViewById(R.id.email);
+        shopname=(EditText)findViewById(R.id.shop_name);
+        add=(EditText)findViewById(R.id.address);
         Intent intent = getIntent();
          mobile = intent.getStringExtra("mobile");
         password=(EditText)findViewById(R.id.editText2);
@@ -88,20 +90,21 @@ public class Signup extends AppCompatActivity {
     public void addata(){
         String uname=name.getText().toString();
         String em= id.getText().toString();
-
+        String shopName=shopname.getText().toString();
+        String address= add.getText().toString();
         String p1=(String)password.getText().toString();
         String genre=s1.getSelectedItem().toString();
         String user_name=getid();
         String status= "on";
         validate();
         String id= databasepartner.push().getKey();
-        profile p= new profile(uname,em,mobile,genre,user_name, status);
+        profile p= new profile(uname,em,mobile,genre,user_name, status,shopName,address);
 
         // create user in firestore...
         firestore(mobile);
         createLogin(em,p1);
         databasepartner.child(id).setValue(p);
-
+        startActivity(new Intent(Signup.this,Login.class));
 
     }
 
@@ -131,16 +134,15 @@ public class Signup extends AppCompatActivity {
 
 
 
-        mFirebaseAuth.createUserWithEmailAndPassword(em,p1).addOnCompleteListener ( new OnCompleteListener<AuthResult>() {
+        mFirebaseAuth.createUserWithEmailAndPassword(em,p1).addOnCompleteListener ( Signup.this,new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if (task.isSuccessful()) {
 
-                    mFirebaseAuth.signOut();
                     Toast.makeText(getApplicationContext(), "User Created!", Toast.LENGTH_SHORT).show();
-                    finish();
-                    startActivity(new Intent(getApplicationContext(), Login.class));
+                    mFirebaseAuth.signOut();
+                    return;
                 }
                 else{
                     Toast.makeText(getApplicationContext(),"Error+:"+task.getException().getMessage()+".Try again after sometime.",Toast.LENGTH_LONG).show();

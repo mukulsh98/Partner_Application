@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -34,7 +35,9 @@ public class discount extends AppCompatActivity {
     ImageView imgview;
     Uri FilePathUri;
     StorageReference storageReference;
-    DatabaseReference databaseReference;
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseDatabase mFirebaseDatabase;
+    DatabaseReference databaseReference , db2;
     int Image_Request_Code = 7;
     ProgressDialog progressDialog ;
     private StorageReference mStorageRef;
@@ -52,6 +55,13 @@ public class discount extends AppCompatActivity {
         txtdata = (EditText)findViewById(R.id.txtdata);
         imgview = (ImageView)findViewById(R.id.image_view);
         progressDialog = new ProgressDialog(discount.this);
+
+        // getting info about the current user logged in database user...
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance("https://customerprototype-29375-fbcfa.firebaseio.com/");
+
+        db2= FirebaseDatabase.getInstance("https://customerprototype-29375-fbcfa.firebaseio.com/").getReference();
+
 
         btnbrowse.setOnClickListener(new View.OnClickListener() {
             @Override

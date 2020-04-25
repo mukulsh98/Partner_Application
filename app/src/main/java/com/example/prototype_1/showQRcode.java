@@ -2,6 +2,7 @@ package com.example.prototype_1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -14,7 +15,7 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 public class showQRcode extends AppCompatActivity {
 
-    String email;
+
     private ImageView qrcode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +24,9 @@ public class showQRcode extends AppCompatActivity {
 
         qrcode=(ImageView)findViewById(R.id.qrcode);
 
-        String text=email.trim();
+        SharedPreferences sharedPreferences = getSharedPreferences("app",MODE_PRIVATE);
+
+        String text= sharedPreferences.getString("partnerId","+917587524626");;
         if(text!=null && !(text.isEmpty())){
             try {
                 // generating qr code...

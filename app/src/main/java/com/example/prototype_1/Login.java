@@ -30,6 +30,7 @@ public class Login extends AppCompatActivity {
 
     Button log,signin;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    String emailPattern2="[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+\\.+[a-z]+\\.+[a-z]+";
     EditText un,pass;
     SharedPreferences sharedPreferences;
         private FirebaseAuth firebaseAuth;
@@ -71,13 +72,17 @@ public class Login extends AppCompatActivity {
                 } else {
                     if (un.getText().toString().trim().matches(emailPattern)) {
                         // valid email address...
+
                         validate(uname,p);
 
                         //open2(uname);
 
                     } else {
                         //invalid email address
-                        Toast.makeText(getApplicationContext(), "Invalid email address", Toast.LENGTH_SHORT).show();
+                        if(un.getText().toString().trim().matches(emailPattern2))
+                            validate(uname,p);
+                        else
+                            Toast.makeText(getApplicationContext(), "Invalid email address", Toast.LENGTH_SHORT).show();
                     }
 
 
@@ -121,16 +126,9 @@ public class Login extends AppCompatActivity {
                     progressDialog.dismiss();
                     Toast.makeText(Login.this,"Login Successful",Toast.LENGTH_SHORT).show();
 
-                    // store phone number in shared preference...
-                    //1. get data from firebase or from phone verification...
 
 
-                    String no ="";
-                    //2. Store that phone number in shared preference
 
-                    SharedPreferences.Editor editor= sharedPreferences.edit();
-                    editor.putString("partnerId",no);
-                    editor.commit();
 
                     // Storing phone number in the firestore already in signup as the user is successfully registered its id is created in the firestore with initial balance...
 
